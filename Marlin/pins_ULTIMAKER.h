@@ -45,8 +45,7 @@
 //
 // Servos
 //
-#define SERVO0_PIN         13 // untested
-
+#define SERVO0_PIN         11  // rev a+ gt2560
 //
 // Limit Switches
 //
@@ -55,13 +54,14 @@
 #define Y_MIN_PIN          26
 #define Y_MAX_PIN          28
 #define Z_MIN_PIN          30
-#define Z_MAX_PIN          32
+//#define Z_MAX_PIN          32
+#define Z_MAX_PIN          -1
 
 //
 // Z Probe (when not Z_MIN_PIN)
 //
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN  32
+  #define Z_MIN_PROBE_PIN  30
 #endif
 
 //
