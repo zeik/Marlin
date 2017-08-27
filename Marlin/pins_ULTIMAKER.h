@@ -50,7 +50,7 @@
 // Limit Switches
 //
 #define X_MIN_PIN          22
-#define X_MAX_PIN          24
+//#define X_MAX_PIN          24
 #define Y_MIN_PIN          26
 #define Y_MAX_PIN          28
 #define Z_MIN_PIN          30
@@ -111,7 +111,8 @@
 #define PS_ON_PIN          12
 #define SUICIDE_PIN        54   // PIN that has to be turned on right after start, to keep power flowing.
 #define CASE_LIGHT_PIN      8
-
+// define digital pin for the filament runout sensor. Use gt2560 X max pin
+#define FIL_RUNOUT_PIN      24
 //
 // LCD / Controller
 //
