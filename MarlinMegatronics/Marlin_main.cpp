@@ -13243,7 +13243,21 @@ void idle(
     }
   #endif
 }
-
+/**
+ * move extruder if EXTRUDER_UP_BTN or EXTRUDER_DOWN_BTN pressed
+ * Hexele
+ */
+void handleExtruderButtons() {
+  if (!IS_SD_PRINTING && !commands_in_queue &&!READ(EXTRUDER_UP_BTN)) {
+    enqueue_and_echo_commands_P(PSTR("G28")); 
+    LCD_MESSAGEPGM("UP");
+  }
+  if (!IS_SD_PRINTING && !commands_in_queue &&!READ(EXTRUDER_UP_BTN)) {
+    enqueue_and_echo_commands_P(PSTR("G28")); 
+    LCD_MESSAGEPGM("DOWN");
+  }
+}
+ 
 /**
  * Kill all activity and lock the machine.
  * After this the machine will need to be reset.
@@ -13456,6 +13470,9 @@ void setup() {
     OUT_WRITE(STAT_LED_RED_PIN, LOW); // turn it off
   #endif
 
+    SET_INPUT_PULLUP(EXTRUDE_UP_BTN);
+    SET_INPUT_PULLUP(EXTRUDE_DOWN_BTN);
+    
   #if PIN_EXISTS(STAT_LED_BLUE)
     OUT_WRITE(STAT_LED_BLUE_PIN, LOW); // turn it off
   #endif

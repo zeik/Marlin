@@ -35,12 +35,14 @@
 // Limit Switches
 //
 #define X_MIN_PIN          41
-#define X_MAX_PIN          37
+//#define X_MAX_PIN          37
 #define Y_MIN_PIN          14
-#define Y_MAX_PIN          15
+//#define Y_MAX_PIN          15
 #define Z_MIN_PIN          18
-#define Z_MAX_PIN          19
+//#define Z_MAX_PIN          19
 
+#define EXTRUDE_UP 37
+#define EXTRUDE_DOWN 15
 //
 // Z Probe (when not Z_MIN_PIN)
 //
