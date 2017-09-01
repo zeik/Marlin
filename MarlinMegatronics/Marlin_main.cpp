@@ -13248,11 +13248,11 @@ void idle(
  * Hexele
  */
 void handleExtruderButtons() {
-  if (!IS_SD_PRINTING && !commands_in_queue &&!READ(EXTRUDER_UP_BTN)) {
+  if (!IS_SD_PRINTING && !commands_in_queue &&!digitalRead(41) ) {
     enqueue_and_echo_commands_P(PSTR("G28")); 
     LCD_MESSAGEPGM("UP");
   }
-  if (!IS_SD_PRINTING && !commands_in_queue &&!READ(EXTRUDER_UP_BTN)) {
+  if (!IS_SD_PRINTING && !commands_in_queue &&!digitalRead(42)) {
     enqueue_and_echo_commands_P(PSTR("G28")); 
     LCD_MESSAGEPGM("DOWN");
   }
@@ -13469,9 +13469,12 @@ void setup() {
   #if PIN_EXISTS(STAT_LED_RED)
     OUT_WRITE(STAT_LED_RED_PIN, LOW); // turn it off
   #endif
-
-    SET_INPUT_PULLUP(EXTRUDE_UP_BTN);
-    SET_INPUT_PULLUP(EXTRUDE_DOWN_BTN);
+  #if PIN_EXISTS(EXTRUDE_UP_BTN)
+    SET_INPUT_PULLUP(EXTRUDE_UP_BTN_PIN);
+  #endif
+  #if PIN_EXISTS(EXTRUDE_DOWN_BTN)
+    SET_INPUT_PULLUP(EXTRUDE_DOWN_BTN_PIN);
+  #endif
     
   #if PIN_EXISTS(STAT_LED_BLUE)
     OUT_WRITE(STAT_LED_BLUE_PIN, LOW); // turn it off
