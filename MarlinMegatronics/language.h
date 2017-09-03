@@ -112,6 +112,10 @@
 
 // Serial Console Messages (do not translate those!)
 
+
+#define MGS_HEX_BTN_UP                    "UP"
+#define MGS_HEX_BTN_DOWN                  "DOWN"
+
 #define MSG_ENQUEUEING                      "enqueueing \""
 #define MSG_POWERUP                         "PowerUp"
 #define MSG_EXTERNAL_RESET                  " External Reset"

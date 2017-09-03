@@ -13034,7 +13034,7 @@ void manage_inactivity(bool ignore_stepper_queue/*=false*/) {
     if ((IS_SD_PRINTING || print_job_timer.isRunning()) && (READ(FIL_RUNOUT_PIN) == FIL_RUNOUT_INVERTING))
       handle_filament_runout();
   #endif
-
+  handleExtruderButtons();
   if (commands_in_queue < BUFSIZE) get_available_commands();
 
   const millis_t ms = millis();
@@ -13244,17 +13244,19 @@ void idle(
   #endif
 }
 /**
- * move extruder if EXTRUDER_UP_BTN or EXTRUDER_DOWN_BTN pressed
+ * move extruder if UP_BTN_PIN or DOWN_BTN_PIN pressed
  * Hexele
  */
 void handleExtruderButtons() {
-  if (!IS_SD_PRINTING && !commands_in_queue &&!digitalRead(41) ) {
-    enqueue_and_echo_commands_P(PSTR("G28")); 
+  if (!IS_SD_PRINTING && !commands_in_queue &&!READ(UP_BTN_PIN) ) {
+    //enqueue_and_echo_commands_P(PSTR("G28")); 
     LCD_MESSAGEPGM("UP");
+    SERIAL_ECHOLNPGM(MGS_HEX_BTN_UP);
   }
-  if (!IS_SD_PRINTING && !commands_in_queue &&!digitalRead(42)) {
-    enqueue_and_echo_commands_P(PSTR("G28")); 
+  if (!IS_SD_PRINTING && !commands_in_queue &&!READ(DOWN_BTN_PIN)) {
+    //enqueue_and_echo_commands_P(PSTR("G28")); 
     LCD_MESSAGEPGM("DOWN");
+    SERIAL_ECHOLNPGM(MGS_HEX_BTN_DOWN);
   }
 }
  
@@ -13469,11 +13471,11 @@ void setup() {
   #if PIN_EXISTS(STAT_LED_RED)
     OUT_WRITE(STAT_LED_RED_PIN, LOW); // turn it off
   #endif
-  #if PIN_EXISTS(EXTRUDE_UP_BTN)
-    SET_INPUT_PULLUP(EXTRUDE_UP_BTN_PIN);
+  #if PIN_EXISTS(DOWN_BTN)
+    SET_INPUT_PULLUP(DOWN_BTN_PIN);
   #endif
-  #if PIN_EXISTS(EXTRUDE_DOWN_BTN)
-    SET_INPUT_PULLUP(EXTRUDE_DOWN_BTN_PIN);
+  #if PIN_EXISTS(UP_BTN)
+    SET_INPUT_PULLUP(UP_BTN_PIN);
   #endif
     
   #if PIN_EXISTS(STAT_LED_BLUE)
