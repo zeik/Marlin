@@ -492,6 +492,7 @@ static int serial_count = 0;
 
 // Inactivity shutdown
 millis_t previous_cmd_ms = 0;
+millis_t previous_btn = 0;
 static millis_t max_inactive_time = 0;
 static millis_t stepper_inactive_time = (DEFAULT_STEPPER_DEACTIVE_TIME) * 1000UL;
 
@@ -4237,7 +4238,7 @@ void home_all_axes() { gcode_G28(true); }
 
       case MeshNext:
         if (mbl_probe_index < 0) {
-          SERIAL_PROTOCOLLNPGM("Start mesh probing with \"G29 S1\" first.");
+          ("Start mesh probing with \"G29 S1\" first.");
           return;
         }
         // For each G29 S2...
@@ -13248,14 +13249,28 @@ void idle(
  * Hexele
  */
 void handleExtruderButtons() {
-  if (!IS_SD_PRINTING && !commands_in_queue &&!READ(UP_BTN_PIN) ) {
-    //enqueue_and_echo_commands_P(PSTR("G28")); 
-    LCD_MESSAGEPGM("UP");
-    SERIAL_ECHOLNPGM(MGS_HEX_BTN_UP);
+ 
+
+  
+  char buttonCmd[20];
+
+  if (!IS_SD_PRINTING && (ELAPSED(millis(), previous_btn)) &&!READ(UP_BTN_PIN) ) {
+    previous_btn = millis() + 1000UL;
+    int l = 3;
+    sprintf_P(buttonCmd, PSTR("G1 E%i F200.000"), l);
+    enqueue_and_echo_command("G91"); 
+    enqueue_and_echo_command(buttonCmd);
+    enqueue_and_echo_command("G90"); 
+    //LCD_MESSAGEPGM("UP");
+    //SERIAL_ECHOLNPGM(MGS_HEX_BTN_UP);
   }
-  if (!IS_SD_PRINTING && !commands_in_queue &&!READ(DOWN_BTN_PIN)) {
-    //enqueue_and_echo_commands_P(PSTR("G28")); 
-    LCD_MESSAGEPGM("DOWN");
+  if (!IS_SD_PRINTING && (ELAPSED(millis(), previous_btn)) &&!READ(DOWN_BTN_PIN)) {
+    previous_btn = millis() + 1000UL;
+    int l = -3;
+    sprintf_P(buttonCmd, PSTR("G1 E%i F200.000"), l);
+    enqueue_and_echo_command("G91"); 
+    enqueue_and_echo_command(buttonCmd);
+    enqueue_and_echo_command("G90"); 
     SERIAL_ECHOLNPGM(MGS_HEX_BTN_DOWN);
   }
 }
