@@ -54,16 +54,17 @@
 #define Y_MIN_PIN          41
 //#define Y_MAX_PIN          38
 #define Z_MIN_PIN          18
-#define Z_MAX_PIN          19
+//#define Z_MAX_PIN          19
 
 #define UP_BTN_PIN 40
 #define DOWN_BTN_PIN 38
+#define FIL_RUNOUT_PIN      19
 //
 // Z Probe (when not Z_MIN_PIN)
 //
-#ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN  19
-#endif
+//#ifndef Z_MIN_PROBE_PIN
+//  #define Z_MIN_PROBE_PIN  19
+//#endif
 
 //
 // Steppers
