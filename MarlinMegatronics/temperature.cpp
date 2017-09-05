@@ -63,8 +63,8 @@ Temperature thermalManager;
 
 // public:
 
-float Temperature::current_temperature[HOTENDS] = { 0.0 },
-      Temperature::current_temperature_bed = 0.0;
+float Temperature::current_temperature[HOTENDS] = { 20.0 },
+      Temperature::current_temperature_bed = 20.0;
 int16_t Temperature::current_temperature_raw[HOTENDS] = { 0 },
         Temperature::target_temperature[HOTENDS] = { 0 },
         Temperature::current_temperature_bed_raw = 0;
@@ -934,8 +934,10 @@ void Temperature::updateTemperaturesFromRawValues() {
     current_temperature_raw[0] = read_max6675();
   #endif
   HOTEND_LOOP()
-    current_temperature[e] = Temperature::analog2temp(current_temperature_raw[e], e);
-  current_temperature_bed = Temperature::analog2tempBed(current_temperature_bed_raw);
+    //current_temperature[e] = Temperature::analog2temp(current_temperature_raw[e], e);
+    current_temperature[e] = target_temperature[0];
+  //current_temperature_bed = Temperature::analog2tempBed(current_temperature_bed_raw);
+  current_temperature_bed = target_temperature_bed;
   #if ENABLED(TEMP_SENSOR_1_AS_REDUNDANT)
     redundant_temperature = Temperature::analog2temp(redundant_temperature_raw, 1);
   #endif
@@ -1147,7 +1149,7 @@ void Temperature::init() {
   // Wait for temperature measurement to settle
   delay(250);
 
-  #define TEMP_MIN_ROUTINE(NR) \
+  /*#define TEMP_MIN_ROUTINE(NR) \
     minttemp[NR] = HEATER_ ##NR## _MINTEMP; \
     while (analog2temp(minttemp_raw[NR], NR) < HEATER_ ##NR## _MINTEMP) { \
       if (HEATER_ ##NR## _RAW_LO_TEMP < HEATER_ ##NR## _RAW_HI_TEMP) \
@@ -1155,6 +1157,8 @@ void Temperature::init() {
       else \
         minttemp_raw[NR] -= OVERSAMPLENR; \
     }
+  */
+  #define TEMP_MIN_ROUTINE(NR)  
   #define TEMP_MAX_ROUTINE(NR) \
     maxttemp[NR] = HEATER_ ##NR## _MAXTEMP; \
     while (analog2temp(maxttemp_raw[NR], NR) > HEATER_ ##NR## _MAXTEMP) { \
@@ -1490,7 +1494,7 @@ void Temperature::disable_all_heaters() {
  */
 void Temperature::set_current_temp_raw() {
   #if HAS_TEMP_0 && DISABLED(HEATER_0_USES_MAX6675)
-    current_temperature_raw[0] = raw_temp_value[0];
+    current_temperature_raw[0] = 10000;//raw_temp_value[0];
   #endif
   #if HAS_TEMP_1
     #if ENABLED(TEMP_SENSOR_1_AS_REDUNDANT)
@@ -1508,7 +1512,7 @@ void Temperature::set_current_temp_raw() {
       #endif
     #endif
   #endif
-  current_temperature_bed_raw = raw_temp_bed_value;
+  current_temperature_bed_raw = 10000;//raw_temp_bed_value;
   temp_meas_ready = true;
 }
 

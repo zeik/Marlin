@@ -893,7 +893,6 @@ void setup_killpin() {
 }
 
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
-
   void setup_filrunoutpin() {
     #if ENABLED(ENDSTOPPULLUP_FIL_RUNOUT)
       SET_INPUT_PULLUP(FIL_RUNOUT_PIN);
