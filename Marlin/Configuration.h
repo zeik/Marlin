@@ -634,8 +634,8 @@
  * in current flowing through the wires).  This is likely most useful to users of the
  * BLTouch probe, but may also help those with inductive or other probe types.
  */
-#define PROBING_HEATERS_OFF       // Turn heaters off when probing
-#define PROBING_FANS_OFF          // Turn fans off when probing
+//#define PROBING_HEATERS_OFF       // Turn heaters off when probing
+//#define PROBING_FANS_OFF          // Turn fans off when probing
 
 // A probe that is deployed and stowed with a solenoid pin (SOL1_PIN)
 //#define SOLENOID_PROBE
@@ -697,7 +697,7 @@
  * Example: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
  *     But: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
  */
-#define Z_CLEARANCE_DEPLOY_PROBE   15 // Z Clearance for Deploy/Stow
+#define Z_CLEARANCE_DEPLOY_PROBE   8 // Z Clearance for Deploy/Stow
 #define Z_CLEARANCE_BETWEEN_PROBES  5 // Z Clearance between probe points
 
 // For M851 give a range for adjusting the Z probe offset
@@ -748,7 +748,7 @@
 
 // @section homing
 
-#define Z_HOMING_HEIGHT 8  // (in mm) Minimal z height before homing (G28) for Z clearance above the bed, clamps, ...
+#define Z_HOMING_HEIGHT 5  // (in mm) Minimal z height before homing (G28) for Z clearance above the bed, clamps, ...
                              // Be sure you have this distance over your Z_MAX_POS in case.
 
 // Direction of endstops when homing; 1=MAX, -1=MIN
